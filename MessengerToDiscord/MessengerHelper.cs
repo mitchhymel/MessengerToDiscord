@@ -11,7 +11,7 @@ namespace MessengerToDiscord
     {
         public List<Message> Messages { get; set; }
 
-        private string Path { get; set; }
+        public string Path { get; set; }
 
         public MessengerHelper()
         {
@@ -31,20 +31,24 @@ namespace MessengerToDiscord
                     ParseJsonFile(file);
                 }
             }
+
+            // sort messages by timestamp
+            Messages.Sort((a, b) => a.TimeStamp.CompareTo(b.TimeStamp));
         }
 
         public void ParseJsonFile(string filePath)
         {
             MessageFile file = JsonConvert.DeserializeObject<MessageFile>(File.ReadAllText(filePath));
+
             Messages.AddRange(file.Messages);
         }
 
-        public string GetPathToMediaFromUri(string uri)
+        public static string GetPathToMediaFromUri(string path, string uri)
         {
-            string[] uriSplit = uri.Split();
+            string[] uriSplit = uri.Split("/");
             string mediaType = uriSplit[uriSplit.Length - 2];
             string fileName = uriSplit[uriSplit.Length - 1];
-            return $"{Path}/{mediaType}/{fileName}";
+            return $"{path}\\{mediaType}\\{fileName}";
         }
     }
 }

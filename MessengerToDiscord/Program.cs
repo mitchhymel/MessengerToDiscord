@@ -22,14 +22,16 @@ namespace MessengerToDiscord
             MessengerHelper helper = new MessengerHelper();
             helper.Initialize(path);
 
-            foreach (Message message in helper.Messages)
-            {
-                Console.WriteLine(JsonConvert.SerializeObject(message));
-            }
+            //foreach (Message message in helper.Messages)
+            //{
+            //    Console.WriteLine(message.GetMessageContent());
+            //}
 
             Console.WriteLine("Parsed messages... setting up discord bot");
             DiscordHelper discord = new DiscordHelper();
             await discord.SetUpDiscord();
+
+            await discord.WriteMessagesToChannel(Secrets.CHANNEL_ID, helper.Messages, path);
 
 
             Console.WriteLine("Done!");
