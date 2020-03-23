@@ -9,15 +9,15 @@ namespace MessengerToDiscord
 {
     public class DiscordHelper
     {
-        DiscordClient Discord = new DiscordClient(new DiscordConfiguration
-        {
-            Token = Secrets.TOKEN,
-            TokenType = TokenType.Bot
-        });
+        DiscordClient Discord { get; set; }
 
-        public DiscordHelper()
+        public DiscordHelper(string token)
         {
-
+            Discord = new DiscordClient(new DiscordConfiguration
+            {
+                Token = token,
+                TokenType = TokenType.Bot
+            });
         }
 
         public async Task<DiscordClient> SetUpDiscord()

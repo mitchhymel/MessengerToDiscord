@@ -138,7 +138,7 @@ namespace MessengerToDiscord
         {
             string filePath = MessengerHelper.GetPathToMediaFromUri(path, media.Uri);
             FileStream stream = File.OpenRead(filePath);
-            string[] pathSplit = filePath.Split();
+            string[] pathSplit = filePath.Split("\\");
             string name = pathSplit[pathSplit.Length - 1];
             dict.Add(name, stream);
         }
